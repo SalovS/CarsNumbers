@@ -2,27 +2,28 @@ import java.util.*;
 
 public class CarsNumbers {
     public void Start(){
-        ArrayList<String> carsNumbers = getNumbers();
+        List carsNumbers = getNumbers();
         String number = "X555СТ84";
         bruteForceSearch(carsNumbers, number);
         binarySearch(carsNumbers, number);
         hashSetSearch(carsNumbers, number);
         treeSetSearch(carsNumbers, number);
     }
-    public ArrayList<String> getNumbers(){
-        ArrayList<String> numbers = new ArrayList<>();
-        numbers.add("");
-        return addRegion(addLetter(addLetter(addNumbers(addLetter(numbers)))));
-    }
 
-    private ArrayList<String> addLetter(ArrayList<String>numbers){
-        ArrayList<String> array = new ArrayList<>();
-        for (String number: numbers) {
-            for(int i = 1; i < 13; i++){
-                array.add(number + getLetter(i));
+    public List<String> getNumbers(){
+        List numbers = new ArrayList();
+        for(int i = 1; i < 13; i++){
+            for(int j = 111; j < 1000; j+=111){
+                for(int k = 1; k < 13; k++){
+                    for(int l = 1; l < 13; l++){
+                        for(int u = 1; u < 200; u++){
+                            numbers.add(String.format("%s%d%s%s%02d",getLetter(i),j,getLetter(k),getLetter(l),u));
+                        }
+                    }
+                }
             }
         }
-        return array;
+        return numbers;
     }
 
     private String getLetter(int number){
@@ -49,27 +50,7 @@ public class CarsNumbers {
         return "не найден";
     }
 
-    private ArrayList<String> addNumbers(ArrayList<String> numbers){
-        ArrayList<String> array = new ArrayList<>();
-        for(String number: numbers){
-            for(int i = 111; i < 1000; i += 111){
-                array.add(number + i);
-            }
-        }
-        return array;
-    }
-
-    private ArrayList<String> addRegion(ArrayList<String> numbers){
-        ArrayList<String> array = new ArrayList<>();
-        for(String number: numbers){
-            for(int i = 1; i < 200; i++){
-                array.add(number + String.format("%02d",i));
-            }
-        }
-        return array;
-    }
-
-    public void bruteForceSearch(ArrayList<String> carsNumbers, String carNumber){
+    public void bruteForceSearch(List<String> carsNumbers, String carNumber){
         boolean answer = false;
         long finish = System.nanoTime();
         long start = System.nanoTime();
@@ -86,7 +67,7 @@ public class CarsNumbers {
         System.out.printf("Поиск перебором: номер %s, поиск занял %dнс\n",gerAnswer(answer), (finish - start));
     }
 
-    public void binarySearch(ArrayList<String> carsNumbers, String carNumber){
+    public void binarySearch(List<String> carsNumbers, String carNumber){
         boolean answer = false;
         long finish = System.nanoTime();
         Collections.sort(carsNumbers, Collections.reverseOrder());
@@ -112,7 +93,7 @@ public class CarsNumbers {
         System.out.printf("Бинарный поиск : номер %s, поиск занял %dнс\n",gerAnswer(answer), (finish - start));
     }
 
-    public void hashSetSearch(ArrayList<String> carsNumbers, String carNumber){
+    public void hashSetSearch(List<String> carsNumbers, String carNumber){
         boolean answer = false;
         HashSet hashSet = new HashSet(carsNumbers);
         long start = System.nanoTime();
@@ -121,7 +102,7 @@ public class CarsNumbers {
         System.out.printf("Поиск в HashSet: номер %s, поиск занял %dнс\n",gerAnswer(answer), (finish - start));
     }
 
-    public void treeSetSearch(ArrayList<String> carsNumbers, String carNumber){
+    public void treeSetSearch(List<String> carsNumbers, String carNumber){
         boolean answer = false;
         Set treeSet = new TreeSet(carsNumbers);
         long start = System.nanoTime();
